@@ -1,18 +1,20 @@
 [
   {
-    "name": "MyTool",
-    "description": "أداة قوية ومتعددة المهام لفحص الثغرات.",
-    "category": "اختراق",
-    "hash": "a1b2c3d4e5f6g7h8",
-    "install_cmd": "git clone https://github.com/bsenexia/MyTool",
-    "rating": 5
+    "id": 1,
+    "name": "NetScanner",
+    "category": "شبكات",
+    "description": "أداة متقدمة لفحص الشبكات والاتصالات.",
+    "os": ["linux", "windows"],
+    "install_cmd": "pip install netscanner",
+    "type": "library"
   },
   {
-    "name": "NetScanner",
-    "description": "أداة متقدمة لفحص الشبكات والاتصالات.",
-    "category": "شبكات",
-    "hash": "f8e7d6c5b4a3210",
-    "install_cmd": "pkg install nmap && nmap -v",
-    "rating": 4
+    "id": 2,
+    "name": "MyTool",
+    "category": "حماية",
+    "description": "أداة قوية ومتعددة المهام لفحص الثغرات.",
+    "os": ["linux"],
+    "install_cmd": "git clone https://github.com/nexia/mytool",
+    "type": "tool"
   }
 ]
