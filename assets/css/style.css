@@ -1,4 +1,6 @@
-:root { --kali-green: #059669; }
-body { font-family: 'JetBrains Mono', monospace; background: #ffffff; }
-.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.card { border: 1px solid #e2e8f0; padding: 20px; transition: 0.2s; }
+:root { --cyber-green: #059669; --bg-dark: #0f172a; }
+body { background-color: var(--bg-dark); color: #f8fafc; font-family: 'JetBrains Mono', monospace; }
+.kali-card { background: #1e293b; border: 1px solid #334155; transition: 0.3s; }
+.kali-card:hover { border-color: var(--cyber-green); box-shadow: 0 0 15px rgba(5, 150, 105, 0.2); }
+nav { border-bottom: 1px solid #334155; }
+.text-cyber-green { color: var(--cyber-green); }
