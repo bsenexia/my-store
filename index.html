@@ -3,23 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexia Store</title>
+    <title>Nexia | Official Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #050505; color: #e0e0e0; font-family: sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .card { background: white; border-bottom: 3px solid #00d4ff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="p-4">
-    <h1 class="text-3xl font-bold text-center text-cyan-400 mb-6">NEXIA</h1>
-    <div id="tools" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto"></div>
+<body class="p-4 md:p-10">
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-12 border-b pb-6">
+            <h1 class="text-4xl font-extrabold text-slate-900">NEXIA</h1>
+            <p class="text-slate-600 mt-2">منصة الأدوات الموثوقة للمحترفين</p>
+        </header>
+
+        <main id="tools" class="grid grid-cols-1 md:grid-cols-2 gap-6"></main>
+    </div>
+
     <script>
         fetch('apps.json').then(r => r.json()).then(data => {
             document.getElementById('tools').innerHTML = data.map(app => `
-                <div class="glass p-4 rounded-lg">
-                    <h2 class="font-bold">${app.name}</h2>
-                    <p class="text-xs text-slate-400 mb-2">${app.description}</p>
-                    <button onclick="alert('تم نسخ الأمر')" class="w-full bg-cyan-900 py-1 rounded text-xs">نسخ أمر التثبيت</button>
+                <div class="card p-6 rounded-sm hover:translate-y-[-5px] transition-all">
+                    <span class="text-[10px] font-bold text-cyan-600 uppercase tracking-widest">${app.category}</span>
+                    <h2 class="text-xl font-bold mt-1 mb-3">${app.name}</h2>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">${app.description}</p>
+                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم النسخ')" 
+                            class="w-full bg-slate-900 text-white py-2 text-sm font-semibold hover:bg-cyan-600 transition">تثبيت الأداة</button>
                 </div>
             `).join('');
         });
