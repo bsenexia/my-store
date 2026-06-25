@@ -10,10 +10,12 @@
         body { background: var(--bg); color: var(--text); transition: 0.3s; }
         .glass { background: rgba(128, 128, 128, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(128, 128, 128, 0.2); }
         #toast { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: #00d4ff; color: #000; border-radius: 8px; display: none; font-weight: bold; }
+        #backTop { position: fixed; bottom: 20px; left: 20px; padding: 10px; background: #334155; border-radius: 50%; display: none; cursor: pointer; }
     </style>
 </head>
 <body class="p-6">
     <div id="toast"></div>
+    <div id="backTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️</div>
 
     <header class="text-center mb-10">
         <button onclick="toggleTheme()" class="fixed top-4 left-4 p-2 bg-slate-800 rounded-full">🌓</button>
@@ -24,6 +26,11 @@
     <main id="tools" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"></main>
 
     <script>
+        // إظهار زر العودة للأعلى عند التمرير
+        window.onscroll = () => {
+            document.getElementById('backTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+        };
+
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.innerText = msg;
