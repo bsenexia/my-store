@@ -7,18 +7,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .nav-link { color: #475569; font-weight: 500; transition: color 0.2s; }
+        .nav-link:hover { color: #0891b2; }
         .card { background: white; border-bottom: 3px solid #00d4ff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="p-4 md:p-10">
-    <div class="max-w-4xl mx-auto">
-        <header class="mb-12 border-b pb-6">
-            <h1 class="text-4xl font-extrabold text-slate-900">NEXIA</h1>
-            <p class="text-slate-600 mt-2">منصة الأدوات الموثوقة للمحترفين</p>
+<body>
+    <!-- شريط التنقل الاحترافي -->
+    <nav class="bg-white border-b border-slate-200 px-4 md:px-10 py-4 flex items-center justify-between">
+        <div class="text-2xl font-black text-slate-900">NEXIA</div>
+        <div class="hidden md:flex gap-8">
+            <a href="#" class="nav-link">الرئيسية</a>
+            <a href="#" class="nav-link">التوثيق</a>
+            <a href="#" class="nav-link">المجتمع</a>
+            <a href="#" class="nav-link">الدعم</a>
+        </div>
+        <button class="md:hidden text-slate-900">☰</button>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 md:p-10">
+        <header class="mb-12">
+            <h1 class="text-4xl font-extrabold text-slate-900">مركز البرمجيات</h1>
+            <p class="text-slate-600 mt-2">استكشف أدواتنا الموثوقة للمحترفين</p>
         </header>
 
-        <main id="tools" class="grid grid-cols-1 md:grid-cols-2 gap-6"></main>
-    </div>
+        <div id="tools" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    </main>
 
     <script>
         fetch('apps.json').then(r => r.json()).then(data => {
