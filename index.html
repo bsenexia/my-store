@@ -3,45 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexia | Enterprise Solutions</title>
+    <title>Nexia | Software Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f8fafc; color: #0f172a; }
-        .nav-link { color: #0f172a; font-weight: 600; transition: 0.3s; }
-        .nav-link:hover { color: #0ea5e9; }
-        .card { background: white; border-top: 4px solid #0ea5e9; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #ffffff; color: #1e293b; }
+        .nav-link { color: #1e293b; font-weight: 600; transition: 0.3s; }
+        .nav-link:hover { color: #10b981; }
+        /* استخدام الوان الصورة الجديدة */
+        .card { background: #f0fdf4; border: 1px solid #dcfce7; }
+        .btn-green { background: #059669; color: white; }
+        .btn-green:hover { background: #047857; }
     </style>
 </head>
 <body>
-    <nav class="bg-white border-b border-slate-200 px-6 md:px-16 py-5 flex items-center justify-between">
-        <div class="text-3xl font-black tracking-tighter text-[#0f172a]">NEXIA</div>
+    <nav class="bg-white px-6 md:px-16 py-6 flex items-center justify-between border-b border-gray-100">
+        <div class="text-3xl font-black tracking-tighter text-[#059669]">NEXIA</div>
         <div class="hidden md:flex gap-10">
             <a href="#" class="nav-link">الرئيسية</a>
             <a href="#" class="nav-link">الحلول</a>
             <a href="#" class="nav-link">الأدوات</a>
-            <a href="#" class="nav-link">الموارد</a>
         </div>
-        <button class="md:hidden text-[#0f172a] text-2xl">☰</button>
+        <button class="md:hidden text-[#059669] text-2xl">☰</button>
     </nav>
 
     <main class="max-w-6xl mx-auto p-6 md:p-16">
-        <header class="mb-16">
-            <h1 class="text-5xl font-extrabold text-[#0f172a]">حلول برمجية احترافية</h1>
-            <p class="text-xl text-slate-500 mt-4 max-w-2xl">نقدم أدوات وبرمجيات عملية تدفع أعمالك نحو التميز التقني.</p>
+        <header class="mb-20">
+            <h1 class="text-5xl font-extrabold text-[#064e3b]">ابتكار برمجيات للجميع</h1>
+            <p class="text-xl text-gray-500 mt-6 max-w-xl leading-relaxed">أدوات عملية تجمع بين قوة الحوسبة وبساطة التصميم. ابدأ رحلتك التقنية معنا.</p>
         </header>
 
-        <div id="tools" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+        <div id="tools" class="grid grid-cols-1 md:grid-cols-3 gap-10"></div>
     </main>
 
     <script>
         fetch('apps.json').then(r => r.json()).then(data => {
             document.getElementById('tools').innerHTML = data.map(app => `
-                <div class="card p-8 rounded-sm hover:scale-[1.02] transition-transform">
-                    <span class="text-[11px] font-bold text-[#0ea5e9] uppercase tracking-widest">${app.category}</span>
-                    <h2 class="text-2xl font-bold mt-2 mb-4 text-[#0f172a]">${app.name}</h2>
-                    <p class="text-slate-600 mb-8 leading-relaxed">${app.description}</p>
+                <div class="card p-8 rounded-2xl transition-all hover:shadow-xl">
+                    <span class="text-[10px] font-bold text-[#10b981] uppercase tracking-widest">${app.category}</span>
+                    <h2 class="text-2xl font-bold mt-3 mb-4 text-[#064e3b]">${app.name}</h2>
+                    <p class="text-gray-600 mb-8 leading-relaxed">${app.description}</p>
                     <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم النسخ')" 
-                            class="w-full bg-[#0ea5e9] text-white py-3 font-bold hover:bg-[#0284c7] transition shadow-lg">تثبيت الأداة</button>
+                            class="w-full btn-green py-3 rounded-lg font-bold transition shadow-lg">تثبيت الأداة</button>
                 </div>
             `).join('');
         });
