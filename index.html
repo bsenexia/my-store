@@ -9,9 +9,12 @@
         .light { --bg: #ffffff; --text: #1a1a1a; }
         body { background: var(--bg); color: var(--text); transition: 0.3s; }
         .glass { background: rgba(128, 128, 128, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(128, 128, 128, 0.2); }
+        #toast { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: #00d4ff; color: #000; border-radius: 8px; display: none; font-weight: bold; }
     </style>
 </head>
 <body class="p-6">
+    <div id="toast"></div>
+
     <header class="text-center mb-10">
         <button onclick="toggleTheme()" class="fixed top-4 left-4 p-2 bg-slate-800 rounded-full">🌓</button>
         <h1 class="text-4xl font-black text-cyan-400">NEXIA</h1>
@@ -21,6 +24,13 @@
     <main id="tools" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"></main>
 
     <script>
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 2000);
+        }
+
         function toggleTheme() {
             document.getElementById('html-root').classList.toggle('light');
         }
@@ -49,7 +59,7 @@
                     </div>
                     <h2 class="text-lg font-bold">${app.name}</h2>
                     <p class="text-sm opacity-70 mb-4">${app.description}</p>
-                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم النسخ!')" class="w-full border border-cyan-500 py-1.5 rounded hover:bg-cyan-500 hover:text-black transition">نسخ أمر التثبيت</button>
+                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); showToast('تم نسخ الأمر بنجاح!')" class="w-full border border-cyan-500 py-1.5 rounded hover:bg-cyan-500 hover:text-black transition">نسخ أمر التثبيت</button>
                 </div>
             `).join('');
         }
