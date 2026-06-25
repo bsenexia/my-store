@@ -1,37 +1,56 @@
-<div class="flex justify-center gap-4 mb-12">
-    <button onclick="filterTools('all')" class="px-4 py-2 bg-gray-200 rounded-full text-sm font-bold">الكل</button>
-    <button onclick="filterTools('linux')" class="px-4 py-2 bg-gray-200 rounded-full text-sm font-bold">Linux</button>
-    <button onclick="filterTools('windows')" class="px-4 py-2 bg-gray-200 rounded-full text-sm font-bold">Windows</button>
-</div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexia | Professional Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'JetBrains Mono', monospace; background-color: #ffffff; color: #0f172a; }
+        .card { border: 1px solid #e2e8f0; transition: 0.3s; }
+        .card:hover { border-color: #059669; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .btn-action { background: #059669; color: white; }
+        .btn-action:hover { background: #064e3b; }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+    <nav class="flex items-center justify-between pb-10 border-b border-gray-200 mb-10">
+        <h1 class="text-3xl font-black text-black tracking-tighter">NEXIA<span class="text-[#059669]">.</span></h1>
+        <div class="space-x-4 space-x-reverse font-bold text-sm">
+            <a href="#" onclick="filterTools('all')">الكل</a>
+            <a href="#" onclick="filterTools('linux')">Linux</a>
+            <a href="#" onclick="filterTools('windows')">Windows</a>
+        </div>
+    </nav>
 
-<script>
-    // متغير لتخزين البيانات الأصلية
-    let currentData = [];
+    <div id="tools" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-    // جلب البيانات أولاً
-    fetch('apps.json').then(r => r.json()).then(data => {
-        currentData = data;
-        renderTools(data);
-    });
+    <script>
+        let currentData = [];
+        fetch('apps.json').then(r => r.json()).then(data => {
+            currentData = data;
+            renderTools(data);
+        });
 
-    // دالة الفلترة
-    function filterTools(os) {
-        if (os === 'all') {
-            renderTools(currentData);
-        } else {
-            const filtered = currentData.filter(app => app.os.includes(os));
-            renderTools(filtered);
+        function renderTools(data) {
+            document.getElementById('tools').innerHTML = data.map(app => `
+                <div class="card p-6 bg-white rounded-lg">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-1 rounded">${app.category}</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-2">${app.name}</h2>
+                    <p class="text-sm text-gray-500 mb-6 h-12">${app.description}</p>
+                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم النسخ')" 
+                            class="w-full btn-action py-2 rounded text-sm font-bold transition">تثبيت الآن</button>
+                </div>
+            `).join('');
         }
-    }
 
-    // دالة العرض
-    function renderTools(data) {
-        document.getElementById('tools').innerHTML = data.map(app => `
-            <div class="card p-8 rounded-2xl">
-                <h2 class="text-2xl font-bold text-[#064e3b]">${app.name}</h2>
-                <p class="text-gray-600 my-4">${app.description}</p>
-                <button onclick="navigator.clipboard.writeText('${app.install_cmd}')" class="w-full btn-green py-3 rounded-lg font-bold">تثبيت</button>
-            </div>
-        `).join('');
-    }
-</script>
+        function filterTools(os) {
+            if (os === 'all') renderTools(currentData);
+            else renderTools(currentData.filter(app => app.os.includes(os)));
+        }
+    </script>
+</body>
+</html>
