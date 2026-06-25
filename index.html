@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="html-root">
 <head>
     <meta charset="UTF-8">
     <title>Nexia | Cyber Elite Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .glow:hover { box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); border-color: #00d4ff; }
-        .fade-in { animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        body { background: #050505; color: #e0e0e0; }
+        :root { --bg: #050505; --text: #e0e0e0; }
+        .light { --bg: #ffffff; --text: #1a1a1a; }
+        body { background: var(--bg); color: var(--text); transition: 0.3s; }
+        .glass { background: rgba(128, 128, 128, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(128, 128, 128, 0.2); }
     </style>
 </head>
 <body class="p-6">
     <header class="text-center mb-10">
+        <button onclick="toggleTheme()" class="fixed top-4 left-4 p-2 bg-slate-800 rounded-full">🌓</button>
         <h1 class="text-4xl font-black text-cyan-400">NEXIA</h1>
         <div id="categories" class="mt-4 flex flex-wrap justify-center gap-2"></div>
     </header>
@@ -21,8 +21,11 @@
     <main id="tools" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"></main>
 
     <script>
+        function toggleTheme() {
+            document.getElementById('html-root').classList.toggle('light');
+        }
+
         let allApps = [];
-        // جلب البيانات مرة واحدة فقط عند فتح الموقع
         async function loadData() {
             const res = await fetch('apps.json');
             allApps = await res.json();
@@ -38,22 +41,18 @@
         }
 
         function render(data) {
-            const container = document.getElementById('tools');
-            container.classList.add('fade-in');
-            container.innerHTML = data.map(app => `
-                <div class="glass p-5 rounded-xl glow">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-[10px] bg-cyan-900 px-2 py-0.5 rounded text-cyan-200">${app.category}</span>
-                        <span class="text-yellow-500 text-xs">⭐ ${app.rating}.0</span>
+            document.getElementById('tools').innerHTML = data.map(app => `
+                <div class="glass p-5 rounded-xl">
+                    <div class="flex justify-between items-center mb-2 text-xs">
+                        <span class="bg-cyan-900 px-2 py-0.5 rounded text-cyan-200">${app.category}</span>
+                        <span>⭐ ${app.rating}.0</span>
                     </div>
                     <h2 class="text-lg font-bold">${app.name}</h2>
-                    <p class="text-sm text-slate-400 mb-4">${app.description}</p>
-                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم نسخ أمر التثبيت')" class="w-full text-center border border-cyan-500 text-cyan-400 py-1.5 rounded hover:bg-cyan-500 hover:text-black">نسخ أمر التثبيت</button>
+                    <p class="text-sm opacity-70 mb-4">${app.description}</p>
+                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم النسخ!')" class="w-full border border-cyan-500 py-1.5 rounded hover:bg-cyan-500 hover:text-black transition">نسخ أمر التثبيت</button>
                 </div>
             `).join('');
-            setTimeout(() => container.classList.remove('fade-in'), 300);
         }
-
         loadData();
     </script>
 </body>
