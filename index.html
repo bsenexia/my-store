@@ -7,6 +7,8 @@
     <style>
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .glow:hover { box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); border-color: #00d4ff; }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         body { background: #050505; color: #e0e0e0; }
     </style>
 </head>
@@ -20,17 +22,25 @@
 
     <script>
         let allApps = [];
-        fetch('apps.json').then(r => r.json()).then(data => {
-            allApps = data;
-            const cats = ['الكل', ...new Set(data.map(a => a.category))];
+        // جلب البيانات مرة واحدة فقط عند فتح الموقع
+        async function loadData() {
+            const res = await fetch('apps.json');
+            allApps = await res.json();
+            const cats = ['الكل', ...new Set(allApps.map(a => a.category))];
             document.getElementById('categories').innerHTML = cats.map(c => 
-                `<button onclick="filter('${c}')" class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-cyan-900">${c}</button>`
+                `<button onclick="filter('${c}')" class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-cyan-900 transition">${c}</button>`
             ).join('');
-            render(data);
-        });
+            render(allApps);
+        }
+
+        function filter(cat) {
+            render(cat === 'الكل' ? allApps : allApps.filter(a => a.category === cat));
+        }
 
         function render(data) {
-            document.getElementById('tools').innerHTML = data.map(app => `
+            const container = document.getElementById('tools');
+            container.classList.add('fade-in');
+            container.innerHTML = data.map(app => `
                 <div class="glass p-5 rounded-xl glow">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-[10px] bg-cyan-900 px-2 py-0.5 rounded text-cyan-200">${app.category}</span>
@@ -38,10 +48,13 @@
                     </div>
                     <h2 class="text-lg font-bold">${app.name}</h2>
                     <p class="text-sm text-slate-400 mb-4">${app.description}</p>
-                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم النسخ!')" class="w-full text-center border border-cyan-500 text-cyan-400 py-1.5 rounded hover:bg-cyan-500 hover:text-black">نسخ أمر التثبيت</button>
+                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم نسخ أمر التثبيت')" class="w-full text-center border border-cyan-500 text-cyan-400 py-1.5 rounded hover:bg-cyan-500 hover:text-black">نسخ أمر التثبيت</button>
                 </div>
             `).join('');
+            setTimeout(() => container.classList.remove('fade-in'), 300);
         }
+
+        loadData();
     </script>
 </body>
 </html>
