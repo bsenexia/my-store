@@ -1,0 +1,4 @@
+:root { --kali-green: #059669; }
+body { font-family: 'JetBrains Mono', monospace; background: #ffffff; }
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.card { border: 1px solid #e2e8f0; padding: 20px; transition: 0.2s; }

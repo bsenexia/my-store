@@ -2,55 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexia | Professional Tools</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-        body { font-family: 'JetBrains Mono', monospace; background-color: #ffffff; color: #0f172a; }
-        .card { border: 1px solid #e2e8f0; transition: 0.3s; }
-        .card:hover { border-color: #059669; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .btn-action { background: #059669; color: white; }
-        .btn-action:hover { background: #064e3b; }
-    </style>
 </head>
-<body class="p-4 md:p-10">
-    <nav class="flex items-center justify-between pb-10 border-b border-gray-200 mb-10">
-        <h1 class="text-3xl font-black text-black tracking-tighter">NEXIA<span class="text-[#059669]">.</span></h1>
-        <div class="space-x-4 space-x-reverse font-bold text-sm">
-            <a href="#" onclick="filterTools('all')">الكل</a>
-            <a href="#" onclick="filterTools('linux')">Linux</a>
-            <a href="#" onclick="filterTools('windows')">Windows</a>
-        </div>
-    </nav>
-
-    <div id="tools" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
+<body class="bg-white">
+    <div class="max-w-6xl mx-auto p-10">
+        <h1 class="text-4xl font-black mb-10">Nexia <span class="text-green-600">Library</span></h1>
+        <div id="tools" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </div>
+    <script src="assets/js/engine.js"></script>
     <script>
-        let currentData = [];
-        fetch('data/apps.json').then(r => r.json()).then(data => {
-            currentData = data;
-            renderTools(data);
-        });
-
-        function renderTools(data) {
-            document.getElementById('tools').innerHTML = data.map(app => `
-                <div class="card p-6 bg-white rounded-lg">
-                    <div class="mb-4">
-                        <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-1 rounded">${app.category}</span>
-                    </div>
-                    <h2 class="text-xl font-bold mb-2">${app.name}</h2>
-                    <p class="text-sm text-gray-500 mb-6 h-12">${app.description}</p>
-                    <button onclick="navigator.clipboard.writeText('${app.install_cmd}'); alert('تم النسخ')" 
-                            class="w-full btn-action py-2 rounded text-sm font-bold transition">تثبيت الآن</button>
-                </div>
-            `).join('');
-        }
-
-        function filterTools(os) {
-            if (os === 'all') renderTools(currentData);
-            else renderTools(currentData.filter(app => app.os.includes(os)));
-        }
+        fetch('data/apps.json')
+            .then(r => r.json())
+            .then(data => KaliEngine.init(data));
     </script>
 </body>
 </html>
