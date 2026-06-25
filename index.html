@@ -2,19 +2,39 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>.nav-active { border-bottom: 2px solid #059669; color: #059669; }</style>
 </head>
-<body class="bg-white">
-    <div class="max-w-6xl mx-auto p-10">
-        <h1 class="text-4xl font-black mb-10">Nexia <span class="text-green-600">Library</span></h1>
-        <div id="tools" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-    </div>
+<body class="bg-gray-50">
+    <nav class="bg-white border-b border-gray-200 p-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-4 items-center">
+            <h1 class="font-black text-xl">NEXIA</h1>
+            <input type="text" id="search" placeholder="ابحث عن أداة..." class="bg-gray-100 p-2 rounded text-sm w-full md:w-64 border-none" oninput="liveSearch()">
+            <div class="flex gap-4 text-sm font-bold">
+                <button onclick="filterBy('all', this)" class="nav-active">الكل</button>
+                <button onclick="filterBy('linux', this)">Linux</button>
+                <button onclick="filterBy('windows', this)">Windows</button>
+            </div>
+        </div>
+    </nav>
+    <div id="tools" class="max-w-6xl mx-auto p-6"></div>
     <script src="assets/js/engine.js"></script>
     <script>
-        fetch('data/apps.json')
-            .then(r => r.json())
-            .then(data => KaliEngine.init(data));
+        let rawData = [];
+        fetch('data/apps.json').then(r => r.json()).then(data => { rawData = data; NexiaEngine.render(data); });
+        
+        function liveSearch() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filtered = rawData.filter(a => a.name.toLowerCase().includes(query) || a.description.toLowerCase().includes(query));
+            NexiaEngine.render(filtered);
+        }
+
+        function filterBy(os, btn) {
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('nav-active'));
+            btn.classList.add('nav-active');
+            const filtered = os === 'all' ? rawData : rawData.filter(app => app.os.includes(os));
+            NexiaEngine.render(filtered);
+        }
     </script>
 </body>
 </html>
