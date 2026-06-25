@@ -28,7 +28,7 @@
 
     <script>
         let currentData = [];
-        fetch('apps.json').then(r => r.json()).then(data => {
+        fetch('data/apps.json').then(r => r.json()).then(data => {
             currentData = data;
             renderTools(data);
         });

@@ -2,19 +2,11 @@
   {
     "id": 1,
     "name": "NetScanner",
+    "version": "2.1.0",
     "category": "شبكات",
     "description": "أداة متقدمة لفحص الشبكات والاتصالات.",
     "os": ["linux", "windows"],
     "install_cmd": "pip install netscanner",
-    "type": "library"
-  },
-  {
-    "id": 2,
-    "name": "MyTool",
-    "category": "حماية",
-    "description": "أداة قوية ومتعددة المهام لفحص الثغرات.",
-    "os": ["linux"],
-    "install_cmd": "git clone https://github.com/nexia/mytool",
-    "type": "tool"
+    "doc_link": "docs/netscanner.md"
   }
 ]
